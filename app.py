@@ -4,6 +4,8 @@ import re
 
 from google.appengine.ext import ndb
 
+import SMS
+
 def enum(**enums):
     return type('Enum', (), enums)
 
