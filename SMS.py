@@ -6,11 +6,11 @@ standardDisclaimer = "  Curb Samaritan is free service.  See http://curbsamarita
 def textResponse(cls, result, number):
     pass
 
-confirmationMessage = """Please enter the follow code Curb Samaritan to confirm your phone number: %(code)s.""" + standardDisclaimer
+confirmationMessage = """Please enter the follow cod Curb Samaritan to confirm your phone number: %(code)s.""" + standardDisclaimer
 
 def textConfirmation(cls, number, code):
     return sendSMS(user.number, confirmationMessage % {
-        number : number
+        number : number,
         code : code
         })
 
