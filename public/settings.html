@@ -1,0 +1,42 @@
+<div signin-required>
+
+  <h1>Settings</h1>
+  {{user.nickname.value}}
+  <div>
+    <div class="form-group">
+      <label>Your Nickname:</label>
+      <div cs-alert="nameAlert"></div>
+      <form name="nameForm" ng-submit="nicknameChanged(nameForm)">
+        <input type="text" ng-model="nickname" name="nickname"
+           ng-blur="nicknameChanged(nameForm)"
+           tooltip="This nickname will be visible to the people who send you texts."
+           tooltip-trigger="focus" tooltip-placement="right" class="form-control" />
+      </form>
+    </div>
+
+    <div class="form-group" ng-if="user.numberSent || codeAlert.visible">
+      <label>Enter The Code :</label>
+      <div cs-alert="codeAlert"></div>
+      <form name="codeForm" ng-submit="codeEntered(codeForm)">
+        <input type="text" ng-model="code" name="code"
+           ng-blur="codeEntered(codeForm)" 
+           tooltip="Enter the code we texted you to confirm your mobile number."
+           tooltip-trigger="focus" tooltip-placement="right" class="form-control" />
+      </form>
+    </div>
+
+    <div class="form-group">
+      <label>Your Number:</label>
+      <div cs-alert="numberAlert"></div>
+      <p class="form-control" ng-if="user.number.value">
+        {{user.number.value || asPhoneNumber }}
+        <button class="btn btn-primary btn-sm" ng-click="enterNumber()">Change number</button>
+        <button class="btn btn-warning btn-sm" ng-click="cancelNumber()">Cancel number</button>
+      </p>
+      <p class="form-control" ng-if="!user.number.value">
+        <i>not set</i>
+        <button class="btn btn-primary btn-sm" ng-click="enterNumber()">Set number</button>
+      </p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,39 @@
+<div>
+  <div ng-app="placard" ng-controller="PlacardCtrl">
+    <div style="margin: 20px 0;"></div>
+    <div style="border: thin solid gray;border-radius:20px;">
+      <table>
+        <tr>
+          <td width="70%">
+            <div style="margin:10px;font-size:20pt;line-height:28pt;padding: 20px;">
+              <h2><i>Is this car in trouble?</i></h2>
+              <p>Please text the code <tt style="font-size:120%">{{code}}</tt> and an explanation to
+              <tt style="font-size:120%">{{project.phone}}</tt>
+              or scan the image on the right.</p>
+              <p>Go to <tt>{{project.url}}</tt> for more information.</p>
+            </div>
+          </td>
+          <td width="30%">
+            <img style="width:95%;margin:0px;"
+              ng-src="https://chart.googleapis.com/chart?cht=qr&chs=400x400&chld=H|0&chl=SMSTO:+{{shortnumber}}:{{code}}:"/>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <hr style="border-top: dotted 1px;margin: 20px 0;"/>
+
+    <div style="font-family: sans-serif;margin:50px 80px;">
+      <h2>Instructions:</h2>
+      <ol>
+        <li>Cut out the sign above.</li>
+        <li>Tape it in your car window, facing out.</li>
+        <li>Check that the sign does not block your view!</li>
+      </ol>
+      <h2>Remember the Terms of Use:</h2>
+      <ul>
+        <li>This sign is not license to park like an idiot.</li>
+        <li>Do not use the service for anything unlawful or abusive.</li>
+        <li>Respond quickly to texts about your car.</li>
+      </ul>
+    </div>
+  </div

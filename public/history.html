@@ -1,0 +1,68 @@
+<div signin-required>
+
+  <h1>Welcome to Curb Samaritan</h1>
+
+  <h2 ng-if="!calls.length">No texts have been sent to you yet!</h2>
+
+
+
+
+  <center>
+    <pagination boundary-links="true" total-items="calls.length" ng-model="currentPage" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" items-per-page="pageSize" ng-change="pageChanged(currentPage)"></pagination>
+  </center>
+  <table class="table table-bordered table-striped">
+    <tr>
+      <th>
+        Time
+      </th>
+      <th>
+        Direction
+      </th>
+      <th>
+        Caller
+      </th>
+      <th>
+        Message
+      </th>
+    </tr>
+    <tr ng-repeat="call in pageCalls">
+      <td>
+        {{call.when | date : 'short' }}
+      </td>
+      <td>
+        {{call.ctype == 'thank'? "Out" : "In"}}
+      </td>
+      <td>
+        <a ng-click="rename(call.caller)">{{call.caller.nickname.value || (call.caller.id % 10000) }}</a>
+      </td>
+      <td>
+        {{call.message | truncate:20 }}
+      </td>
+      <td>
+        <div ng-if="call.ctype == 'incoming'">
+          <button ng-click="thank(call)" ng-if="!call.thanked.value">Thank</button>
+          <i ng-if="call.thanked.value">Thanked</i>
+        </div>
+      </td>
+      <td>
+        <div ng-if="call.ctype == 'incoming'">
+          <button ng-click="report(call)" ng-if="!call.reported.value">Report</button>
+          <i ng-if="call.reported.value">Reported</i>
+        </div>
+      </td>
+    </tr>
+  </table>
+  <script type="text/ng-template" id="callPopup.html">
+    <div class="modal-header">
+        <h3 class="modal-title"></h3>
+    </div>
+    <div class="modal-body">
+      <p></p>
+      <textarea class="form-control" ng-model="thankYouMessage"></textarea>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="send()">Send</button>
+        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    </div>
+  </script>
+</div>

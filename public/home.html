@@ -1,0 +1,21 @@
+<div signin-required>
+
+  <h1>Welcome to Curb Samaritan</h1>
+
+  <h2 ng-if="user.nickname.value">Hello, {{user.nickname.value}}</h2>
+
+  <p ng-if="!user.number.value">
+    We do not know your phone-number.  Go to <a ui-sref="settings">Settings</a> and
+    enter the number for your cell-phone.  Without it, we cannot help you at all!
+  </p>
+
+  <p ng-if="!user.nickname.value">
+    There is some other information we would like as well. Go to <a ui-sref="settings">Settings</a> and
+    fill out the form.  The information will help us give you a better experience.
+  </p>
+
+  <p ng-if="user.number.value" ng-controller="placardCtrl">
+    <button class="btn btn-primary" ng-click="openPlacard(user.code)">Get your window-sign</button>
+  </p>
+  
+</div>
