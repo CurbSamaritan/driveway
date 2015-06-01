@@ -74,7 +74,7 @@ class User(ndb.Model):
     def sendNumber(self, number):
         contact = Contact(user=self.key, number=number)
         contact.put()
-        SMS.textConfirmation(self, number, contact.code)
+        SMS.textConfirmation(number, contact.code)
         return contact
 
     def _getMine(self, cls):

@@ -52,8 +52,11 @@ def resultAsData(result, process=lambda d:d):
 
 @app.route('/call', methods=["POST"])
 def call():
-    rv = Call.callReceived(request.form['number'],
-                           request.form['text'])
+    number = request.form['From']
+    text = request.form['Body']
+
+    rv = Call.callReceived(number,
+                           text)
     return jsonify({
         "result" : "success"
     } if isinstance(rv, Call) else failureAsData(rv))
