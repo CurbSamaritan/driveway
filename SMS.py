@@ -10,8 +10,6 @@ def textResponse(cls, result, number):
 confirmationMessage = """Please enter the follow cod Curb Samaritan to confirm your phone number: %(code)s.""" + standardDisclaimer
 
 def textConfirmation(number, code):
-    print number
-    print code
     return send(number, confirmationMessage % {
         'number' : number,
         'code' : code
