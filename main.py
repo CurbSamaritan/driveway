@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import os
 import time
 import re
 import json
@@ -11,7 +12,13 @@ from flask import Flask, jsonify, session
 from flask import request
 app = Flask(__name__)
 
-from config import config
+if os.environ['SERVER_SOFTWARE'].startswith('Development'):
+   from private import config_dev as cfg
+else:
+   from private import config_prod as cfg
+
+config = cfg.config
+
 app.secret_key = config['app']['secret_key']
 
 
@@ -23,8 +30,6 @@ from app import Caller
 import pages
 
 from google.appengine.api import  app_identity
-
-print dir(app_identity)
 
 
 def asPosixTime(d):
