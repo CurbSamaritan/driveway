@@ -180,6 +180,17 @@ def facebookValidate(access_token):
         validation = json.loads(result.content)
         if validation["verified"]:
             return validation
+
+def googleValidate(access_token):
+    result = urlfetch.fetch(url="https://www.googleapis.com/plus/v1/people/me?access_token=" + access_token)
+    print "CODE: ",result.status_code
+    if result.status_code == 200:
+        validation = json.loads(result.content)
+        print validation
+        return {
+            "id" : validation['id'],
+            "first_name" : validation['name']['givenName']
+            }
     
 
 @app.route('/user/signin', methods=["POST"])
@@ -189,6 +200,8 @@ def userSignin():
     u = None
     if network == 'facebook':
         u = facebookValidate(access_token)
+    elif network == 'google':
+        u = googleValidate(access_token)
     else:
         reason = 'bad network'
         
