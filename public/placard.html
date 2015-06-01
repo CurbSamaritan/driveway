@@ -1,3 +1,14 @@
+<style> 
+h2 {
+   font-family: 'Marker Felt',cursive;
+   font-size:200%;
+}
+
+tt.bolder {
+  font-size:120%;
+}
+</style>
+
 <div>
   <div ng-app="placard" ng-controller="PlacardCtrl">
     <div style="margin: 20px 0;"></div>
@@ -7,8 +18,8 @@
           <td width="70%">
             <div style="margin:10px;font-size:20pt;line-height:28pt;padding: 20px;">
               <h2><i>Is this car in trouble?</i></h2>
-              <p>Please text the code <tt style="font-size:120%">{{code}}</tt> and an explanation to
-              <tt style="font-size:120%">{{project.phone}}</tt>
+              <p>Please text the code <tt class="bolder">{{code}}</tt> and an explanation to
+              <tt class="bolder">{{project.phone}}</tt>
               or scan the image on the right.</p>
               <p>Go to <tt>{{project.url}}</tt> for more information.</p>
             </div>
