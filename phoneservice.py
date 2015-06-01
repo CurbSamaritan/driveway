@@ -13,4 +13,5 @@ client = TwilioRestClient(account_sid, auth_token)
 def send(target, message):
     logging.info("sending message {} to {}".format(message, target))
     client.messages.create(body = message, to = target, from_ = twilio_number )
+    return 'success'
 
