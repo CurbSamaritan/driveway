@@ -22,6 +22,11 @@ from app import Caller
 
 import pages
 
+from google.appengine.api import  app_identity
+
+print dir(app_identity)
+
+
 def asPosixTime(d):
     return int(time.mktime(d.timetuple()) * 1000)
 

@@ -101,7 +101,6 @@ class User(ndb.Model):
             self.number = confirmed.number
             self.put()
             for contact in contacts:
-                print contact.number, contact.status
                 if contact.status == 'active':
                     contact.status = 'former'
                     contact.put()
@@ -224,9 +223,6 @@ class Contact(ndb.Model):
     code = CodeProperty(default='')
 
     def isPending(self):
-        print (self.status == 'pending' )
-        print (datetime.datetime.now() - self.created).days 
-
         return (self.status == 'pending' and
                 (datetime.datetime.now() - self.created).days == 0)
 
