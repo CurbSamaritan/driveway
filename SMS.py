@@ -1,13 +1,19 @@
 from phoneservice import send
+import appConfig
 
-standardDisclaimer = "  Curb Samaritan is free service.  See http://curbsamaritan.com for more info."
 
+
+def getProject():
+  return appConfig.get()["public"]["project"]
+
+def getStandardDisclaimer():
+    return "  Curb Samaritan is free service.  See %(url)s for more info." % getProject()
 
 
 def textResponse(cls, result, number):
     pass
 
-confirmationMessage = """Enter this code on Curb Samaritan: %(code)s.""" + standardDisclaimer
+confirmationMessage = """Enter this code on Curb Samaritan: %(code)s.""" + getStandardDisclaimer()
 
 def textConfirmation(number, code):
     return send(number, confirmationMessage % {
@@ -15,7 +21,7 @@ def textConfirmation(number, code):
         'code' : code
         })
 
-standardMessage = """A kind soul sends you a message through Curb Samaritan: %(message)s.""" + standardDisclaimer
+standardMessage = """A kind soul sends you a message through Curb Samaritan: %(message)s.""" + getStandardDisclaimer()
 
 def textMessage(user, message):
     return send(user.number, standardMessage % {
@@ -24,7 +30,7 @@ def textMessage(user, message):
         'salutation' : user.nickname + ", " if user.nickname else ""
         })
 
-thanksMessage = """A thank-you from %(nickname)s for your Curb Samaritan message of %(when)s: %(message)s.""" + standardDisclaimer
+thanksMessage = """A thank-you from %(nickname)s for your Curb Samaritan message of %(when)s: %(message)s.""" + getStandardDisclaimer()
 
 def textThanks(user, call, caller, message):
     return send(caller.number, thanksMessage % {
