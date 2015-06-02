@@ -6,12 +6,7 @@
     <div class="form-group">
       <label>Your Nickname:</label>
       <div cs-alert="nameAlert"></div>
-      <form name="nameForm" ng-submit="nicknameChanged(nameForm)">
-        <input type="text" ng-model="nickname" name="nickname"
-           ng-blur="nicknameChanged(nameForm)"
-           tooltip="This nickname will be visible to the people who send you texts."
-           tooltip-trigger="focus" tooltip-placement="right" class="form-control" />
-      </form>
+      <a href="#" editable-text="changes.nickname">{{ changes.nickname || "empty" }}</a>
     </div>
 
     <div class="form-group" ng-if="user.numberSent || codeAlert.visible">

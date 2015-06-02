@@ -10,25 +10,25 @@ angular.module("curbsam")
 
     session.onSigninChange($scope).on(function(user) {
       if (user && user.ready) {
-        $scope.nickname = user.nickname.value;
-
-        $scope.nicknameChanged = function(form) {
-          clearAlerts();
-          if (user.nickname.value !== form.nickname.$modelValue) {
-            user.nickname.set(form.nickname.$modelValue).then(function() {
-              $scope.nameAlert = {
-                content : "Your nickname has been changed.",
-                visible : true
-              };
-            }, function(reason) {
-              $scope.nameAlert = {
-                content : "There was a problem changing your nickname: " + reason,
-                type : 'danger',
-                visible : true
-              };
-            });
-          }
+        $scope.changes = {
+          nickname : user.nickname.value
         };
+
+        $scope.$watch("changes.nickname", function(nickname) {
+          clearAlerts();
+          user.nickname.set(nickname).then(function() {
+            $scope.nameAlert = {
+              content : "Your nickname has been changed.",
+              visible : true
+            };
+          }, function(reason) {
+            $scope.nameAlert = {
+              content : "There was a problem changing your nickname: " + reason,
+              type : 'danger',
+              visible : true
+            };
+          });
+        });
 
         $scope.codeEntered = function(form) {
           clearAlerts();

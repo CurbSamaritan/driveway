@@ -33,7 +33,7 @@
         {{call.ctype == 'thank'? "Out" : "In"}}
       </td>
       <td>
-        <a ng-click="rename(call.caller)">{{call.caller.nickname.value || (call.caller.id % 10000) }}</a>
+        <a onaftersave="rename(call.caller)" editable-text="callerNames[call.caller.id]" href="#">{{call.caller.nickname.value || (call.caller.id % 10000) }}</a>
       </td>
       <td>
         {{call.message | truncate:20 }}

@@ -40,6 +40,7 @@ def renderIndex(config):
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
 <link rel="stylesheet" href="%(lib)s/bootstrap-social/4.9.0/bootstrap-social.min.css"/>
 <link rel="stylesheet" href="%(lib)s/font-awesome/4.3.0/css/font-awesome.min.css"/>
+<link rel="stylesheet" href="%(public.cdn)s/external/xeditable.css"/>
 
 <script src="%(lib)s/jquery/2.1.4/jquery.min.js"></script>
 <script src="%(lib)s/angular.js/1.3.15/angular.js"></script> 
@@ -49,7 +50,7 @@ def renderIndex(config):
 
 
 <script>
-angular.module("curbsam", ['ui.bootstrap', 'ui.router'])
+angular.module("curbsam", ['ui.bootstrap', 'ui.router', 'xeditable'])
 %(values)s
 ;
 </script>
@@ -59,6 +60,7 @@ angular.module("curbsam", ['ui.bootstrap', 'ui.router'])
 <script src="%(public.cdn)s/about.js"></script>
 <script src="%(public.cdn)s/history.js"></script>
 <script src="%(public.cdn)s/settings.js"></script>
+<script src="%(public.cdn)s/external/xeditable.min.js"></script>
 <style>
 .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
 </style>

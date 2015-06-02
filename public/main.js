@@ -20,7 +20,8 @@ angular.module("curbsam")
 		  templateUrl : cdn + '/history.html'
     });
     
-  }).run(function(session,  $rootScope, $state) {
+  }).run(function(session,  $rootScope, $state, editableOptions) {
+    editableOptions.theme = 'bs3';
     if (!$state.$current.name) {
       $state.go('about', { replace : true });  // why is this necessary?
     }
@@ -97,9 +98,15 @@ angular.module("curbsam")
     };
 
     var makeFake = function(components, ispost) {
+      var onNum = /^[0-9]*$/i.exec(components[1]);
       if (ispost) {
-        components.splice(1, 1);
+        if (onNum) {
+          components.splice(1, 1);
+        }
+      } else if (("user" === components[0]) && onNum) {
+        components[1] = 12;
       }
+
       return "/fake/" + components.join('.') + ".json";
     };
 

@@ -1,5 +1,6 @@
 angular.module("curbsam")
   .controller("HistoryCtrl", function(session, GenericPopup, $scope, $q) {
+    $scope.callerNames = {};
     $scope.calls = [];
     $scope.pageCalls = [];
     $scope.pageSize = 10;
@@ -12,12 +13,15 @@ angular.module("curbsam")
 
     session.onSigninChange($scope).on(function(user) {
       if (user.ready) {
+        var callers = {}
+
         $q.all([ user.fetchCallers(), user.fetchCalls() ])
           .then(function(args) {
             var callers = {}
             $.map(args[0], function(caller) {
               callers[caller.id] = caller;
               caller.calls = 0;
+              $scope.callerNames[caller.id] = caller.nickname.value;
             });
 
             var calls = args[1];
@@ -34,14 +38,7 @@ angular.module("curbsam")
 
 
     $scope.rename = function(caller) {
-      return GenericPopup.open({ 
-        title: "Rename a caller", 
-        body: "Give this caller a name so you can recognize his calls.",
-        type : "text",
-        defaultValue: caller.nickname.value
-      }) .then(function(name) {
-          caller.nickname.set(name);
-        });
+      caller.nickname.set($scope.callerNames[caller.id]);
     };
 
     $scope.thank = function(call) {
