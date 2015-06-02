@@ -1,4 +1,7 @@
 {
-  "id" : 12,
-  "nickname" : "Michael"
+  "data": {
+    "id" : 12,
+    "nickname" : "Michael"
+  }, 
+  "result": "success"
 }
