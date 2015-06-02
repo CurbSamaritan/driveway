@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-import os
 import time
 import re
 import json
@@ -12,12 +11,9 @@ from flask import Flask, jsonify, session
 from flask import request
 app = Flask(__name__)
 
-if os.environ['SERVER_SOFTWARE'].startswith('Development'):
-   from private import config_dev as cfg
-else:
-   from private import config_prod as cfg
 
-config = cfg.config
+import appConfig
+config = appConfig.get()
 
 app.secret_key = config['app']['secret_key']
 
