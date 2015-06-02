@@ -4,13 +4,15 @@
       "id": 0,
       "caller": "9E05809",
       "message": "o inventore ve",
-      "when": 1432405849566
+      "when": 1432405849566,
+      "ctype" : "incoming"
     },
     {
       "id": 1,
       "caller": "36227F4",
       "message": "em sequi nesciunt. ",
-      "when": 1432325167877
+      "when": 1432325167877,
+      "ctype" : "thank"
     },
     {
       "id": 2,

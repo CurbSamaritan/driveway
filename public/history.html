@@ -12,13 +12,13 @@
   </center>
   <table class="table table-bordered table-striped">
     <tr>
-      <th>
+      <th style="width: 12%;">
         Time
       </th>
-      <th>
-        Direction
+      <th style="width: 5%;">
+        Dir.
       </th>
-      <th>
+      <th style="width: 25%;">
         Caller
       </th>
       <th>
@@ -39,14 +39,14 @@
         {{call.message | truncate:20 }}
       </td>
       <td>
-        <div ng-if="call.ctype == 'incoming'">
-          <button ng-click="thank(call)" ng-if="!call.thanked.value">Thank</button>
+        <div ng-if="call.ctype !== 'thank'">
+          <button class="btn btn-primary" ng-click="thank(call)" ng-if="!call.thanked.value">Thank</button>
           <i ng-if="call.thanked.value">Thanked</i>
         </div>
       </td>
       <td>
-        <div ng-if="call.ctype == 'incoming'">
-          <button ng-click="report(call)" ng-if="!call.reported.value">Report</button>
+        <div ng-if="call.ctype !== 'thank'">
+          <button class="btn btn-warning" ng-click="report(call)" ng-if="!call.reported.value">Report</button>
           <i ng-if="call.reported.value">Reported</i>
         </div>
       </td>
