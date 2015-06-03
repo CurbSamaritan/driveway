@@ -77,7 +77,9 @@ def renderPlacard(config, code):
 <html>
 <head>
 <title>Curb Samaritan Placard</title>
+    <script src="%(lib)s/jquery/2.1.4/jquery.min.js"></script>
     <script src="%(lib)s/angular.js/1.3.15/angular.js"></script> 
+    <script src="https://cdn.rawgit.com/jeromeetienne/jquery-qrcode/2b253c5/jquery.qrcode.min.js"></script> 
 <script>
 angular.module("curbsamplacard", [])
 %(values)s
