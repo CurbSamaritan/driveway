@@ -2,6 +2,7 @@ angular.module("curbsam")
   .controller("HistoryCtrl", function(session, GenericPopup, $scope, $q) {
     $scope.callerNames = {};
     $scope.calls = [];
+    $scope.callers = {};
     $scope.pageCalls = [];
     $scope.pageSize = 10;
     $scope.pageChanged = function(currentPage) {
@@ -11,31 +12,27 @@ angular.module("curbsam")
       }
     };
 
+    var resetNames = function() {
+      $scope.callerNames = {};
+      $.map($scope.calls, function(call) {
+        var caller = $scope.callers[call.caller];
+        $scope.callerNames[call.caller] = caller && caller.nickname.value;
+      });
+    };
+
     session.onSigninChange($scope).on(function(user) {
       if (user.ready) {
-        var callers = {}
-
-        $q.all([ user.fetchCallers(), user.fetchCalls() ])
-          .then(function(args) {
-            var callers = {}
-            $.map(args[0], function(caller) {
-              callers[caller.id] = caller;
-              caller.calls = 0;
-              $scope.callerNames[caller.id] = caller.nickname.value;
-            });
-
-            var calls = args[1];
-            $.map(calls, function(call) {
-              call.caller = callers[call.caller];
-              call.caller.n_calls++;
-            });
-            $scope.calls = calls;
-            $scope.pageChanged(1);
-          });
+        user.fetchCallers().then(function(callers) {
+          $scope.callers = callers;
+          resetNames();
+        });
+        user.onCalls($scope).on(function(calls) {
+          $scope.calls = calls;
+          resetNames();
+          $scope.pageChanged(1);
+        });
       }
     });
-
-
 
     $scope.rename = function(caller) {
       caller.nickname.set($scope.callerNames[caller.id]);

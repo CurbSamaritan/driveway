@@ -33,7 +33,9 @@
         {{call.ctype == 'thank'? "Out" : "In"}}
       </td>
       <td>
-        <a onaftersave="rename(call.caller)" editable-text="callerNames[call.caller.id]" href="#">{{call.caller.nickname.value || (call.caller.id % 10000) }}</a>
+        <a onaftersave="rename(callers[call.caller])" editable-text="callerNames[call.caller]" href="#">
+           {{callers[call.caller].nickname.value || (call.caller % 10000) }}
+        </a>
       </td>
       <td>
         {{call.message | truncate:20 }}

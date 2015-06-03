@@ -231,8 +231,7 @@ angular.module("curbsam")
 
         var makeUser = function(d) {
 
-          var calls = null;
-          var callPromise = null;
+          var calls = [];
 
           var makeCall = function(c) {
             return {
@@ -272,19 +271,30 @@ angular.module("curbsam")
                 });
             },
             fetchCallers : memoize(function() {
-              return csHttp.get("user", d.id, "callers").then(mapOver(makeCaller));
+              return csHttp.get("user", d.id, "callers")
+                .then(mapOver(makeCaller))
+                .then(function(callerList) {
+                  var callers = {}
+                  $.map(callerList, function(caller) {
+                    callers[caller.id] = caller;
+                  });
+                  return callers;
+                });
             }),
-            fetchCalls : function() {
-              if (!callPromise) {
-                callPromise = csHttp.get("user", d.id, "calls")
+            onCalls : function(scope) {
+              u.fetchCalls();
+              return util.habit(scope, function() {
+                return calls.length;
+              }).on(function() { return calls; });
+            },
+            fetchCalls : memoize(function() {
+              return csHttp.get("user", d.id, "calls")
                   .then(mapOver(makeCall))
                   .then(function(c) {
                     calls = c;
                     return calls;
                   });
-              }
-              return callPromise;
-            }
+            })
           };
           return u;
         };
