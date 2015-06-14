@@ -1,11 +1,5 @@
 angular.module("curbsam")
-  .controller("SettingsCtrl", function(session, GenericPopup, $scope) {
-
-    var clearAlerts = function() {
-      $scope.numberAlert = {};
-      $scope.codeAlert = {};
-      $scope.nameAlert = {};
-    };
+  .controller("SettingsCtrl", function(session, GenericPopup, growl, $scope) {
 
 
     session.onSigninChange($scope).on(function(user) {
@@ -15,18 +9,10 @@ angular.module("curbsam")
         };
 
         $scope.$watch("changes.nickname", function(nickname) {
-          clearAlerts();
           user.nickname.set(nickname).then(function() {
-            $scope.nameAlert = {
-              content : "Your nickname has been changed.",
-              visible : true
-            };
+            growl.success("Your nickname has been changed.", {});
           }, function(reason) {
-            $scope.nameAlert = {
-              content : "There was a problem changing your nickname: " + reason,
-              type : 'danger',
-              visible : true
-            };
+            growl.error("There was a problem changing your nickname: ", {});
           });
         });
 

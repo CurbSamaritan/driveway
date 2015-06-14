@@ -41,6 +41,7 @@ def renderIndex(config):
 <link rel="stylesheet" href="%(lib)s/bootstrap-social/4.9.0/bootstrap-social.min.css"/>
 <link rel="stylesheet" href="%(lib)s/font-awesome/4.3.0/css/font-awesome.min.css"/>
 <link rel="stylesheet" href="https://cdn.rawgit.com/vitalets/angular-xeditable/0b26f8859/dist/css/xeditable.css"/>
+<link rel="stylesheet" href="https://cdn.rawgit.com/JanStevens/angular-growl-2/b18eb1dd89/build/angular-growl.min.css"/>
 
 <script src="%(lib)s/jquery/2.1.4/jquery.min.js"></script>
 <script src="%(lib)s/angular.js/1.3.15/angular.js"></script> 
@@ -48,10 +49,10 @@ def renderIndex(config):
 <script src="%(lib)s/angular-ui-bootstrap/0.13.0/ui-bootstrap-tpls.min.js"></script>
 <script src="%(lib)s/hellojs/1.6.0/hello.all.min.js"></script>
 <script src="https://cdn.rawgit.com/vitalets/angular-xeditable/0b26f8859/dist/js/xeditable.min.js"></script>
-
+<script src="https://cdn.rawgit.com/JanStevens/angular-growl-2/b18eb1dd89/build/angular-growl.min.js"></script>
 
 <script>
-angular.module("curbsam", ['ui.bootstrap', 'ui.router', 'xeditable'])
+angular.module("curbsam", ['ui.bootstrap', 'ui.router', 'xeditable', 'angular-growl'])
 %(values)s
 ;
 </script>

@@ -1,37 +1,46 @@
 <div signin-required>
-
+  <style>
+   th.setting {
+     text-align: right;
+     width: 30%;
+   }
+  </style>
   <h1>Settings</h1>
-  {{user.nickname.value}}
-  <div>
-    <div class="form-group">
-      <label>Your Nickname:</label>
-      <div cs-alert="nameAlert"></div>
-      <a href="#" editable-text="changes.nickname">{{ changes.nickname || "empty" }}</a>
-    </div>
+  <h2>Hi, {{user.nickname.value}}</h2>
+  <div growl></div>
+  <table class="table table-bordered">
+    <tr>
+      <th class="setting">Your Nickname:</th>
+      <td>
+        <a href="#" editable-text="changes.nickname">{{ changes.nickname || "empty" }}</a>
+      </td>
+    </tr>
 
-    <div class="form-group" ng-if="user.numberSent || codeAlert.visible">
-      <label>Enter The Code :</label>
-      <div cs-alert="codeAlert"></div>
-      <form name="codeForm" ng-submit="codeEntered(codeForm)">
-        <input type="text" ng-model="code" name="code"
-           ng-blur="codeEntered(codeForm)" 
-           tooltip="Enter the code we texted you to confirm your mobile number."
-           tooltip-trigger="focus" tooltip-placement="right" class="form-control" />
-      </form>
-    </div>
+    <tr>
+      <th class="setting">Your Number:</th>
+      <td> 
+        <p ng-if="user.number.value">
+          {{user.number.value || asPhoneNumber }}
+          <button class="btn btn-primary btn-sm" ng-click="enterNumber()">Change number</button>
+          <button class="btn btn-warning btn-sm" ng-click="cancelNumber()">Cancel number</button>
+        </p>
+        <p ng-if="!user.number.value">
+          <i>not set</i>
+          <button class="btn btn-primary btn-sm" ng-click="enterNumber()">Set number</button>
+        </p>
+      </td>
+    </tr>
 
-    <div class="form-group">
-      <label>Your Number:</label>
-      <div cs-alert="numberAlert"></div>
-      <p class="form-control" ng-if="user.number.value">
-        {{user.number.value || asPhoneNumber }}
-        <button class="btn btn-primary btn-sm" ng-click="enterNumber()">Change number</button>
-        <button class="btn btn-warning btn-sm" ng-click="cancelNumber()">Cancel number</button>
-      </p>
-      <p class="form-control" ng-if="!user.number.value">
-        <i>not set</i>
-        <button class="btn btn-primary btn-sm" ng-click="enterNumber()">Set number</button>
-      </p>
-    </div>
-  </div>
+    <tr ng-if="user.numberSent">
+      <th class="setting">Enter The Code:</th>
+      <td> 
+        <form name="codeForm" ng-submit="codeEntered(codeForm)">
+          <input type="text" ng-model="code" name="code"
+             ng-blur="codeEntered(codeForm)" 
+             tooltip="Enter the code we texted you to confirm your mobile number."
+             tooltip-trigger="focus" tooltip-placement="right" class="form-control" />
+        </form>
+      </td>
+    </tr>
+  </table>
 </div>
