@@ -111,16 +111,17 @@ angular.module("curbsam")
   }).directive("csSocial", function(session) {
     return {
 	    restrict : 'AE',
+      controllerAs: 'soc',
       scope : {
         name : "=csSocial",
       },
-      template : '<a ng-click="signin(name)" class="btn navbar-btn btn-social" ng-class="\'btn-\' + name"><i class="fa" ng-class="\'fa-\' + name"></i> Sign in with {{titles[name]}} </a>',
-      controller : function($scope) {
-        $scope.titles = {
+      template : '<button ng-click="soc.signin(name)" class="zocial" ng-class="name">{{soc.titles[name]}}</button>',
+      controller : function() {
+        this.titles = {
           google : "Google" ,
           facebook : "Facebook"
         };
-        $scope.signin = session.signin;
+        this.signin = session.signin;
       }
     };
   }).directive("csAlert", function() {
@@ -139,6 +140,22 @@ angular.module("curbsam")
   }).controller('placardCtrl', function($scope) {
     $scope.openPlacard = function(code) {
       window.open('/placard/' + code, '_blank')
+    };
+  }).directive("csErrorable", function(util) {
+    var img = new Image();
+    img.src = util.cdn('/loading_bar.gif');
+    return {
+	    restrict : 'AE',
+      transclude: true,
+      controllerAs: 'err',
+      controller : function() {
+        this.image_url = img.src;
+      },
+      templateUrl: util.cdn('/errorable.html'),
+      scope : {
+        theError: "=csErrorable",
+        theBusy: "=csErrorableBusy",
+      }
     };
   })
 ;

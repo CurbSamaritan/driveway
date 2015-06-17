@@ -1,0 +1,5 @@
+<div class="errorable">
+  <div ng-if="!theBusy" ng-transclude></div>
+  <img ng-if="theBusy" ng-src="{{err.image_url}}"/>
+  <div class="error">{{theError}}</div>
+</div>

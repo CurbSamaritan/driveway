@@ -1,30 +1,5 @@
 angular.module("curbsam")
-  .config(function(cdnProvider, $stateProvider, $urlRouterProvider) {
-    var cdn = cdnProvider.$get();
-
-	  $urlRouterProvider.otherwise('/about');
-	  $stateProvider.state('about', {
-		  url : '/about',
-      controller: 'AboutCtrl',
-		  templateUrl : cdn + '/about.html'
-    }).state('home', {
-		  url : '/home',
-		  templateUrl : cdn + '/home.html'
-    }).state('settings', {
-		  url : '/settings',
-      controller : "SettingsCtrl",
-		  templateUrl : cdn + '/settings.html'
-    }).state('history', {
-		  url : '/history',
-      controller : "HistoryCtrl",
-		  templateUrl : cdn + '/history.html'
-    });
-    
-  }).run(function(session,  $rootScope, $state, editableOptions) {
-    editableOptions.theme = 'bs3';
-    if (!$state.$current.name) {
-      $state.go('about', { replace : true });  // why is this necessary?
-    }
+  .run(function(session,  $rootScope) {
     session.init();
   }).provider("util", function() {
     var makeFuture = function() {
@@ -35,8 +10,7 @@ angular.module("curbsam")
         trigger : function(val) {
           lastValSet = true;
           lastVal = val;
-          $.map(watchers,
-                function(watcherPair) {
+          watchers.map(function(watcherPair) {
                   var v = watcherPair[0](val);
                   var on = watcherPair[1];
                   if (v && v.then) {
@@ -81,9 +55,35 @@ angular.module("curbsam")
     };
 
     return {
-      "$get" : function(cdn) {
+      "$get" : function(cdn, $q) {
         return {
           habit : habit,
+          makeArray : function(a) {
+            return [].map.call(a, function(x) { return x } ) 
+          },
+          busyPromise : function(p, ctrl) {
+            ctrl.busy = true;
+            var defer = $q.defer();
+
+            p.then(function(v) { 
+              defer.resolve(v);
+              ctrl.busy = false;
+            }, function(v) { 
+              defer.reject(v);
+              ctrl.error = v;
+              ctrl.busy = false;
+            });
+            return defer.promise;
+          },
+          param : function(p) {
+            var m = [];
+            angular.forEach(p,
+                            function(value, key) {
+                              this.push(encodeURIComponent(key) + '=' + encodeURIComponent(value));
+                            }, 
+                            m);
+            return m.join('&');
+          },
           cdn : function(path) {
             return cdn + path;
           }
@@ -91,7 +91,6 @@ angular.module("curbsam")
       }
     };
   }).provider("csHttp", function() {
-
 
     var makeReal = function(backend, components) {
       return backend +  components.join("/");
@@ -115,7 +114,7 @@ angular.module("curbsam")
 
 
     return {
-      "$get" : function($http, $q, backend) {
+      "$get" : function($http, $q, util, backend) {
 
         var dataOf = function(d) {
           if (d.data.result === 'success') {
@@ -135,15 +134,15 @@ angular.module("curbsam")
         };
         return {
           get : function() {
-            return $http.get(makeURL($.makeArray(arguments))).then(dataOf, errorOf);
+            return $http.get(makeURL(util.makeArray(arguments))).then(dataOf, errorOf);
           },
           post : function() {
-            var components = $.makeArray(arguments);
+            var components = util.makeArray(arguments);
             var args = components.pop()
             return $http({ method: "post",
                            url : makeURL(components, true),
                            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                           data: args && $.param(args)
+                           data: util.param(args)
                          }).then(dataOf, errorOf);
           }
         };
@@ -179,7 +178,7 @@ angular.module("curbsam")
     var user = pendingUser;
     
     return {
-      "$get" : function(util, csHttp, social, $q, $state, $timeout) {
+      "$get" : function(util, csHttp, social, $q, $timeout) {
 
         var makeField = function(className, model, fieldName) {
           var view = {
@@ -262,12 +261,19 @@ angular.module("curbsam")
                   u.numberSent = true;
                 });
             },
+            sendAgain : function() {
+              u.numberSent = false;
+              u.confirmed = false;
+            },              
             confirmCode : function(code) {
               return csHttp.post("user", d.id, "confirm", { code : code })
                 .then(function(d) {
                   u.number.value = d.number;
                   u.numberSent = false;
+                  u.confirmed = true;
                   return d;
+                //}).then(null, function(d) {
+                //  return $timeout(function() { $q.reject(d); }, 400000);
                 });
             },
             fetchCallers : memoize(function() {
@@ -296,6 +302,7 @@ angular.module("curbsam")
                   });
             })
           };
+          u.confirmed = !!u.number.value;
           return u;
         };
 
@@ -317,10 +324,10 @@ angular.module("curbsam")
           return csHttp.post("user", "signout", null).then(function() {
             user = signedoutUser;
           });
-        }
+        };
 
         var init = function() {
-          x = hello.init(social, {redirect_uri: 'redirect'});
+          hello.init(social, {redirect_uri: 'redirect'});
 
 
           hello.on('auth.login', function(auth) {
@@ -335,7 +342,6 @@ angular.module("curbsam")
           hello.on('auth.logout', function(auth) {
             signout().then(function() {
               user = signedoutUser;
-              $state.go('about');
             });
           });
         };
@@ -372,14 +378,30 @@ angular.module("curbsam")
         };
       }
     };
-  })
-  .controller("HeaderCtrl", function(session, $scope, $state) {
-
+  }).controller("CarbonToad", function(session, util, $scope) {
+    var vm = this;
+    vm.cdn = util.cdn;
     session.onSigninChange($scope).on(function(user) {
-      $scope.signedIn = user.ready;
+      vm.user = user;
     });
 
-    $scope.signout = session.signout;
-    $scope.networks = session.networks;
-  });
+    vm.signout = session.signout;
+    vm.networks = session.networks;
+  }).controller("ConfirmedCtrl", function(session) {
+    var vm = this;
+    vm.signout = session.signout;
+  }).controller("YourNumberCtrl", function(session, util) {
+    this.submit = function(user, number) {
+      util.busyPromise(user.sendNumber(number), this);
+    };
+    this.signout = session.signout;
+  }).controller("ConfirmCtrl", function(session, util) {
+    this.submit = function(user, code) {
+      util.busyPromise(user.confirmCode(code), this);
+    };
+    this.signout = session.signout;
+    this.sendAgain = function(user) {
+      user.sendAgain();
+    };
+  })
 ;

@@ -1,0 +1,48 @@
+<div class="unconfirmed fullheight">
+  <h1>Curb Samaritan</h1>
+  <div class="central-block">
+    <span class="hider"></span>
+    <div ng-if="main.user.pending">
+      <p>Please stand by</p>
+    </div>
+    <div ng-if="!main.user.pending && !main.user.ready" ng-include="main.cdn('/signin.html')"></div>
+    <div ng-if="main.user.ready && !main.user.numberSent" ng-include="main.cdn('/your-number.html')"></div>
+    <div ng-if="main.user.numberSent" ng-include="main.cdn('/confirm.html')"></div>
+  </div>
+  <div class="benefits">
+    <p>How many times has your car gotten towed?  How many times have you left your lights on or a window open?<p>
+
+    <p>You wish that someone had told you.</p>
+
+    <p>And similarly, how many times have you seen a parked car in some sort of trouble &mdash; parked in a tow-away zone or its lights on or a window rolled down?</p>
+
+    <p>You wish that you could have told the owner.</p>
+
+    <h2>You <em>could</em> put your cell-phone number in the window</h2>
+
+    <p>Tape a sign with the number in the rear window.  That way, a good Samaritan passing by could call you
+    or text you and say, &ldquo;Hey, buddy, you left your window open and it looks like rain!&rdquo;<p>
+
+    <p>You could, but it is so obviously a bad idea, no one ever would do that.  The chance of some nut
+    getting your phone number and using it to make your life miserable is just too high.</p>
+
+    <h2>This is where Curb Samaritan comes in</h2>
+
+    <p>You give <em>us</em> your number.  (We are not nuts, we are not going to crank-call
+    you.)  We give you a little sign to post in your rear window.  The sign shows
+    <em>our</em> special code for you.  When the Samaritan texts us, giving us your
+    code and tell us the problem, we text you.  You never see the Samaritan&rsquo;s number
+    and more important, no one ever sees yours!</p>
+
+
+    <h2>How much does it cost?</h2>
+
+    <p>Right now, nothing.  In the future, we may explore -- with your prior permission -- some discreet marketing opportunities, but for now, it is as free as rainbows and sunshine.</p>
+
+    <h2>It is really free?</h2>
+
+    <p>Yup, although if you are so inclined, you could <a href="http://is.gd/michaellorton" target="_blank">buy my book</a></p>
+
+  </div>
+</div>
+  

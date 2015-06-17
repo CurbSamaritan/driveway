@@ -1,0 +1,9 @@
+<div class="your-number" ng-controller="YourNumberCtrl as ync">
+  <p>Thanks for signing in.</p>
+  <p>Enter your phone number to get notified when your car needs help</p>
+  <div cs-errorable="ync.error" cs-errorable-busy="ync.busy">
+    <input ng-model="number" placeholder="enter your phone number"/>
+    <button class="std-button" ng-click="ync.submit(main.user, number)">Submit</button>
+  </div>
+  <a class="alternative" ng-click="ync.signout()">sign out</a>
+</div>

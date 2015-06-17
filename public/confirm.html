@@ -1,0 +1,9 @@
+<div class="confirm" ng-controller="ConfirmCtrl as cc">
+  <p>We sent a code to your phone.  Please enter the code below.</p>
+  <div cs-errorable="cc.error" cs-errorable-busy="cc.busy">
+    <input ng-model="code" placeholder="enter the code"/>
+    <button class="std-button" ng-click="cc.submit(main.user, code)">Submit</button>
+  </div>
+  <a class="alternative" ng-click="cc.sendAgain(main.user)">send again</a>
+  <a class="alternative" ng-click="cc.signout()">sign out</a>
+</div>

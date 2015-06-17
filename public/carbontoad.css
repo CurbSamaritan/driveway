@@ -1,0 +1,95 @@
+.fullheight {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: sans-serif;
+}
+
+.unconfirmed {
+    background-image: url('hero.png') ;
+    background-size: 100% auto;
+    background-position: center top;
+    background-repeat: no-repeat;
+    position: relative;
+    background-color: rgb(204,204,204);
+}
+
+.central-block {
+    margin: 10px auto 100px;
+    position: relative;
+    width: 400px;
+}
+
+.central-block>div {
+    color: white;
+    padding: 30px 30px 40px;
+    position: relative;
+    text-align: center;
+}
+
+.std-button {
+    background-color: rgb(187,77,57);
+    border: thin solid rgb(187,77,57);
+    border-radius: 2px;
+    color: white;
+    margin: 0 10px;
+    padding: 4px 10px;
+    cursor: pointer;
+}
+
+.zocial {
+   margin: 10px 0;
+   width: 200px;
+}
+
+.central-block .hider {
+    background-color: black;
+    display: block;
+    height: 100%;
+    opacity: 0.5;
+    position: absolute;
+    width: 100%;
+}
+
+
+.unconfirmed h1 {
+    color: white;
+    font-size: 40pt;
+    height: 50px;
+    margin: 0;
+    padding: 60px 60px 40px;
+    text-align: center;
+    text-shadow: 2px 2px rgb(97,97,97);
+}
+
+.benefits {
+    background-color: rgb(204,204,204);
+    color: rgb(106,106,106);
+    padding: 20px;
+    position: absolute;
+    top: 65%;
+}
+
+.errorable {
+    height: 60px;
+}
+
+.errorable img {
+    width: 200px;
+}
+
+.errorable .error {
+    color: red;
+    margin-top: 8px;
+}
+
+.alternative {
+    color: rgb(180, 150, 50);
+    cursor: pointer;
+    display: block;
+    font-size: 80%;
+    text-align: right;
+    width: 100%;
+}
