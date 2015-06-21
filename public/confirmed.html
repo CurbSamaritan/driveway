@@ -1,4 +1,26 @@
 <div class="confirmed" ng-controller="ConfirmedCtrl as cc">
-  <h1>Curb Samaritan</h1>
-  <a ng-click="cc.signout()">signout</a>
+  <div class="top-strip">
+    <div class="left-strip">
+      <div class="company-logo">CurbSamaritan</div>
+    </div>
+    <div class="right-strip">
+      <div class="settings"></div>
+      <button ng-click="cc.signout()" class="logout-button hoverable">Sign Out</button>
+    </div>
+  </div>
+
+  <div class="mid-strip">
+    <div class="left-strip">
+      <div class="hero-hello">Hi, {{main.user.nickname.value}}</div>
+    </div>
+    <div class="right-strip">
+      <div class="round-button hoverable" ng-click="cc.mode = 'print'"><span>Print Sign</span></div>
+      <div class="round-button hoverable" ng-click="cc.mode = 'share'"><span>Share</span></div>
+      <div class="round-button hoverable" ng-click="cc.mode = 'texts'"><span>Past Texts</span></div>
+    </div>
+  </div>
+  <div class="bottom-strip">
+    <div ng-include="main.cdn('/confirmed-'+cc.mode+'.html')"></div>
+  </div>
 </div>
+  

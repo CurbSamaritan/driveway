@@ -1,0 +1,7 @@
+<div ng-controller="ShareCtrl as sc">
+  <div ng-repeat="network in sc.networks">
+    <button socialshare="" socialshare-provider="{{network.name}}" socialshare-url="http://curbsamaritan.com" class="zocial" ng-class="network.zocial || network.name">
+     Share on {{network.name | capitalize}}
+    </button>
+  </div>
+</div>

@@ -31,7 +31,7 @@ body {
 
 .std-button {
     background-color: rgb(187,77,57);
-    border: thin solid rgb(187,77,57);
+    border-width: 0px;
     border-radius: 2px;
     color: white;
     margin: 0 10px;
@@ -39,9 +39,13 @@ body {
     cursor: pointer;
 }
 
+.std-button:hover {
+    background-color: rgb(120,60,50);
+}
+
 .zocial {
-   margin: 10px 0;
-   width: 200px;
+    margin: 10px 0;
+    width: 250px;
 }
 
 .central-block .hider {
@@ -92,4 +96,100 @@ body {
     font-size: 80%;
     text-align: right;
     width: 100%;
+}
+
+
+.confirmed {
+    font-family: sans-serif;
+}
+
+.confirmed .top-strip {
+    position: relative;
+    height: 45px;
+}
+
+.confirmed .mid-strip {
+    height: 120px;
+    background-color: gray;
+    position: relative
+}
+
+.confirmed .right-strip {
+    right: 0px;
+    position: absolute;
+}
+
+.confirmed .left-strip {
+    position: absolute;
+    left: 0px;
+}
+
+.company-logo {
+    float: left;
+    font-size: 24px;
+    padding: 10px 20px;
+}
+
+.right-strip div {
+    float: right;
+}
+
+.round-button {
+    border-width: 3px;
+    border-style: solid;
+    border-radius: 50%;
+    font-family: sans-serif;
+    font-size: 28px;
+    height: 100px;
+    margin-right: 50px;
+    margin-top: 10px;
+    width: 100px;
+}
+
+.hoverable {
+    color: #d0d0d0;
+    border-color: #d0d0d0;
+}
+
+.hoverable:hover {
+    color: #F0F0F0;
+    border-color: #F0F0F0;
+    cursor: pointer;
+}
+
+.round-button span {
+    text-align: center;
+    display: block;
+    padding: 18px;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+
+.logout-button {
+    background-color: gray;
+    border-radius: 5px;
+    border-width: 0px;
+    padding: 5px 20px;
+    display: block;
+    margin: 10px 20px;
+}
+
+
+.hero-hello {
+    color: #d0d0d0;
+    float: left;
+    font-size: 40px;
+    padding: 40px;
+}
+
+.bottom-strip {
+    padding: 20px 20%;
+}
+
+.print-placard {
+    font-size: 40px;
+    margin: 0 auto;
+    padding: 25px 60px;
 }

@@ -42,9 +42,10 @@ def renderIndex(config):
 
 <script src="%(lib)s/angular.js/1.3.15/angular.js"></script> 
 <script src="%(lib)s/hellojs/1.6.0/hello.all.min.js"></script>
+<script src="https://cdn.rawgit.com/720kb/angular-socialshare/dc70f51766fcb14ad83decab6a55e1d1ba7f1d60/dist/angular-socialshare.min.js"></script>
 
 <script>
-angular.module("curbsam", [])
+angular.module("curbsam", ['720kb.socialshare'])
 %(values)s
 ;
 </script>
@@ -52,6 +53,7 @@ angular.module("curbsam", [])
 <script src="%(public.cdn)s/map.js"></script>
 <script src="%(public.cdn)s/widget.js"></script>
 <script src="%(public.cdn)s/main.js"></script>
+<script src="%(public.cdn)s/history.js"></script>
 <style>
 .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
 </style>

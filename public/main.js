@@ -86,8 +86,15 @@ angular.module("curbsam")
           },
           cdn : function(path) {
             return cdn + path;
+          },
+          map : function(a, f) {
+            var rv = [];
+            angular.forEach(a, function(v) {
+              rv.push(f(v));
+            });
+            return rv;
           }
-        }
+        };
       }
     };
   }).provider("csHttp", function() {
@@ -221,10 +228,9 @@ angular.module("curbsam")
           };
         };
 
-
         var mapOver = function(f) {
           return function(a) {
-            return $.map(a, f);
+            return util.map(a, f);
           };
         };
 
@@ -281,7 +287,7 @@ angular.module("curbsam")
                 .then(mapOver(makeCaller))
                 .then(function(callerList) {
                   var callers = {}
-                  $.map(callerList, function(caller) {
+                  util.map(callerList, function(caller) {
                     callers[caller.id] = caller;
                   });
                   return callers;
@@ -387,9 +393,10 @@ angular.module("curbsam")
 
     vm.signout = session.signout;
     vm.networks = session.networks;
-  }).controller("ConfirmedCtrl", function(session) {
+  }).controller("ConfirmedCtrl", function(session, $scope) {
     var vm = this;
     vm.signout = session.signout;
+    vm.mode = 'print';
   }).controller("YourNumberCtrl", function(session, util) {
     this.submit = function(user, number) {
       util.busyPromise(user.sendNumber(number), this);
@@ -403,5 +410,13 @@ angular.module("curbsam")
     this.sendAgain = function(user) {
       user.sendAgain();
     };
+  }).controller("ShareCtrl", function() {
+    this.networks = [ 
+      { name: 'facebook'},
+      { name:  'twitter'},
+      { name:  'google+', zocial:  'google'},
+      { name:  'reddit'},
+      { name:  'stumbleupon'}
+    ];
   })
 ;

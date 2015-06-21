@@ -1,44 +1,45 @@
 angular.module("curbsam")
   .controller("HistoryCtrl", function(session, GenericPopup, $scope, $q) {
-    $scope.callerNames = {};
-    $scope.calls = [];
-    $scope.callers = {};
-    $scope.pageCalls = [];
-    $scope.pageSize = 10;
-    $scope.pageChanged = function(currentPage) {
+    var hc = this;
+    hc.callerNames = {};
+    hc.calls = [];
+    hc.callers = {};
+    hc.pageCalls = [];
+    hc.pageSize = 10;
+    hc.pageChanged = function(currentPage) {
       if (currentPage >= 1) {
-        var start = $scope.pageSize * (currentPage - 1)
-        $scope.pageCalls = $scope.calls.slice(start, start + $scope.pageSize);
+        var start = hc.pageSize * (currentPage - 1)
+        hc.pageCalls = hc.calls.slice(start, start + hc.pageSize);
       }
     };
 
     var resetNames = function() {
-      $scope.callerNames = {};
-      $.map($scope.calls, function(call) {
-        var caller = $scope.callers[call.caller];
-        $scope.callerNames[call.caller] = caller && caller.nickname.value;
+      hc.callerNames = {};
+      angular.forEach(hc.calls, function(call) {
+        var caller = hc.callers[call.caller];
+        hc.callerNames[call.caller] = caller && caller.nickname.value;
       });
     };
 
     session.onSigninChange($scope).on(function(user) {
       if (user.ready) {
         user.fetchCallers().then(function(callers) {
-          $scope.callers = callers;
+          hc.callers = callers;
           resetNames();
         });
         user.onCalls($scope).on(function(calls) {
-          $scope.calls = calls;
+          hc.calls = calls;
           resetNames();
-          $scope.pageChanged(1);
+          hc.pageChanged(1);
         });
       }
     });
 
-    $scope.rename = function(caller) {
-      caller.nickname.set($scope.callerNames[caller.id]);
+    hc.rename = function(caller) {
+      caller.nickname.set(hc.callerNames[caller.id]);
     };
 
-    $scope.thank = function(call) {
+    hc.thank = function(call) {
       return GenericPopup.open({ 
         title: "Send a Thank-You", 
         body: "You can send your thanks to the person who texted you.",
@@ -49,7 +50,7 @@ angular.module("curbsam")
         });
     };
 
-    $scope.report = function(call) {
+    hc.report = function(call) {
       return GenericPopup.open({ 
         title: "Report an abusive text", 
         body: "Is the text rude, abusive, or inappropriate?  Please add any additional information below",

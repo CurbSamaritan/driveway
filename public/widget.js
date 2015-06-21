@@ -60,7 +60,7 @@ angular.module("curbsam")
     };
   }).provider("GenericPopup", function() {
     return {
-      "$get" : function(util, $modal) {
+      "$get" : function(util) {
         return {
           open : function(options) {
             var modalInstance = $modal.open({
@@ -137,8 +137,8 @@ angular.module("curbsam")
       n = (n.charAt(1) === '1') ? n.substr(1) : n;
       return "1(" + n.substr(0,3) + ")" + n.substr(3,3) + "-" + n.substr(6);
     };
-  }).controller('placardCtrl', function($scope) {
-    $scope.openPlacard = function(code) {
+  }).controller('PlacardCtrl', function() {
+    this.openPlacard = function(code) {
       window.open('/placard/' + code, '_blank')
     };
   }).directive("csErrorable", function(util) {
@@ -156,6 +156,12 @@ angular.module("curbsam")
         theError: "=csErrorable",
         theBusy: "=csErrorableBusy",
       }
+    };
+  }).filter("capitalize", function() {
+    return function(s) {
+        return s.replace(/\b[a-z]/g, function(c) { 
+          return c.toUpperCase();
+        });
     };
   })
 ;
